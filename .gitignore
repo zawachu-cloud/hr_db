@@ -1,0 +1,17 @@
+# 金鑰 / 連線憑證(嚴禁提交)
+.env
+.env.*
+!.env.example
+
+# 實驗產出 / 草稿 / dump(不進版控)
+tmp/
+dumps/
+*.dump
+*.sql.gz
+
+# OS / 編輯器 / 日誌
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

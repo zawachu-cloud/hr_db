@@ -1,0 +1,17 @@
+# 金鑰 / 連線憑證(嚴禁讀入 context 或外流)
+.env
+.env.*
+!.env.example
+
+# 實驗產出 / dump / 草稿(大且不需讀入 context)
+tmp/*
+dumps/*
+*.dump
+*.sql.gz
+
+# OS / 編輯器 / 日誌
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
