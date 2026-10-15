@@ -6,7 +6,14 @@ description: How to connect to the dev/prod Supabase Postgres for the hr DB-expe
 
 # 連線方式(dev / prod)
 
-憑證在 `.env.dev` / `.env.prod`(已授權、勿印值/勿提交)。**預設只對 dev**。
+憑證在 `.env.dev` / `.env.prod`(已授權、勿印值/勿提交)。**唯讀 select 預設對 prod;寫入/實驗預設 dev**。
+
+## select(查詢)— 預設對 prod
+```bash
+set -a; . ./.env.prod; set +a    # prod 的 SUPABASE_DB_URL 本身即 pooler(ap-southeast-1)
+psql "$SUPABASE_DB_URL" -c "select app_schema_version();"
+```
+
 
 ## 載入環境變數(不印出值)
 ```bash

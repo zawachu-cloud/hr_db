@@ -12,12 +12,14 @@
 ## 連線(dev / prod)
 
 - 憑證在 `.env.dev` / `.env.prod`(已由 hr 複製真實值、已 gitignore,**已授權使用、勿印出值/勿提交**)。
-- **預設只對 dev 操作**;dev=`xdznbojweiyvfaeuwjaj`(ap-southeast-2)、prod=`vdvcysrbxxfonylodkrk`(ap-southeast-1)。
+- **「select」= 查詢 DB,預設對 prod 跑**(唯讀、安全)。老闆說「select …」或要某筆資料時,直接對 **prod**(`vdvcysrbxxfonylodkrk`,ap-southeast-1)執行查詢,不需再問對哪個環境。
+- **「update」= 修改 DB,預設對 prod 跑**。老闆說「update …」要改某筆資料時,直接對 **prod** 執行(已授權,不需再問環境);仍須先一句話說明「將改什麼、影響哪些列」,`drop`/`truncate`/大量刪改等破壞性動作仍先確認。append-only 表(如 `time_punches`)依其機制改(作廢+修正筆),不硬繞 guard。
+- **其餘寫入 / 破壞性 / 實驗動作仍預設 dev**(`xdznbojweiyvfaeuwjaj`,ap-southeast-2)。
 - psql 走 pooler(dev 直連為 IPv6 本機連不到)。**連線指令、載入 env 的寫法見 `.kiro/steering/db-connect.md`**。
 
 ## DB 安全(最高優先)
 
-- **預設 dev**:破壞性/實驗動作一律先在 dev;對 prod 操作前務必確認 link 的 ref 正確。
+- **寫入預設 dev、唯讀 select 預設 prod**:破壞性/寫入/實驗動作一律先在 dev;唯讀查詢(select)直接對 prod;**但老闆說「update …」= 對 prod 修改(已授權)**,仍先說明將改什麼;破壞性動作仍先確認。
 - **additive 原則**:schema 變更一律 `add column/table if not exists`、新增帶生效年月的參數;**不對線上欄位/資料 drop / 破壞性 alter / 覆蓋**。被取代的欄位/表保留(可 `comment ... DEPRECATED`)。
 - **破壞性動作先確認**:`drop`/`truncate`、改 RLS/權限、大量 update/delete、`git push --force`、`reset --hard` 等,先說明風險並取得老闆確認。
 - **唯讀查詢可直接跑**;寫入(含 dev)先說明將改什麼。
