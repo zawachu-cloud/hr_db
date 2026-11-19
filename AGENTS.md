@@ -20,7 +20,7 @@
 ## DB 安全(最高優先)
 
 - **寫入預設 dev、唯讀 select 預設 prod**:破壞性/寫入/實驗動作一律先在 dev;唯讀查詢(select)直接對 prod;**但老闆說「update …」= 對 prod 修改(已授權)**,仍先說明將改什麼;破壞性動作仍先確認。
-- **additive 原則**:schema 變更一律 `add column/table if not exists`、新增帶生效年月的參數;**不對線上欄位/資料 drop / 破壞性 alter / 覆蓋**。被取代的欄位/表保留(可 `comment ... DEPRECATED`)。
+- **additive 原則**:規則見全域 `rules/USER.md`(repoManager,每個 session 自動載入)。本 repo 補充:參數以新增帶生效年月的一筆取代修改。
 - **破壞性動作先確認**:`drop`/`truncate`、改 RLS/權限、大量 update/delete、`git push --force`、`reset --hard` 等,先說明風險並取得老闆確認。
 - **唯讀查詢可直接跑**;寫入(含 dev)先說明將改什麼。
 - **金鑰**:`service_role` 僅後端用,不進前端/版控;真實值只在 `.env.*`。個資(身分證/銀行/PIN)不外流至日誌或第三方。
