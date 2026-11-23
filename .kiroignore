@@ -3,8 +3,8 @@
 .env.*
 !.env.example
 
-# 實驗產出 / dump / 草稿(大且不需讀入 context)
-tmp/*
+# tmp/ 不列在這裡:.kiroignore 會擋指定讀取;tmp/ 只靠 .gitignore 讓搜尋略過
+# dump / 大檔(大且不需讀入 context)
 dumps/*
 *.dump
 *.sql.gz
