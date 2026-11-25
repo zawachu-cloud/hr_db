@@ -8,6 +8,7 @@
 - **做什麼**:連 dev/prod DB 跑 SQL、檢視 schema、驗證資料/計薪假設、起草 migration 草案。
 - **不做什麼**:不放前端、不重建 hr 應用;正式 migration 仍以 `../hr/supabase/migrations` 為單一真實來源,本 repo 只產「草案」,確認後再搬回 hr 走正式部署流程。
 - **現行 schema 概覽**:見 `docs/schema.md`(由 live DB 產生的快照;可重新產生)。
+- **業務名詞**:見 `docs/glossary.md`。
 
 ## 連線(dev / prod)
 
